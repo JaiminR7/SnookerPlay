@@ -65,6 +65,12 @@ app.get('/healthz', (req, res) => {
   res.status(200).send('OK');
 });
 
+// ✅ Add this conditional to avoid trying to load .env on Render
+if (process.env.NODE_ENV !== 'production') {
+  import('dotenv').then(dotenv => dotenv.config());
+}
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
