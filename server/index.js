@@ -32,6 +32,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use((req, res, next) => {
+  if (req.path !== '/healthz') {
+    console.log(`${req.method} ${req.path}`);
+  }
+  next();
+});
+
+
 // Request logging middleware
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path}`);
