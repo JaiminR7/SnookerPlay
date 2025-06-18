@@ -12,9 +12,7 @@ if (result.error) {
 // Debug environment variables immediately after loading
 console.log('🔍 Environment variables check:', {
   hasMongoUri: !!process.env.MONGO_URI,
-  hasResendKey: !!process.env.RESEND_API_KEY,
   hasClientUrl: !!process.env.CLIENT_URL,
-  resendKeyStart: process.env.RESEND_API_KEY ? process.env.RESEND_API_KEY.substring(0, 3) : 'none',
   mongoUri: process.env.MONGO_URI ? 'set' : 'not set'
 });
 
