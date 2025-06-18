@@ -1,0 +1,249 @@
+/* Dashboard.css */
+
+/* Container */
+.dashboard-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  color: #1B3A2F;
+  margin-bottom: 1rem;
+}
+
+.dashboard-info-box {
+  margin-top: 2rem;
+  background-color: #1B3A2F;
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  height: 80px;
+}
+
+.dashboard-info-box h3 {
+  color: #F8F9F9;
+  line-height: 1.6;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  height: 700px;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+/* Card styles */
+.dashboard-card {
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border: 1px solid #D3D3D3;
+  background-color: #FFFFFF;
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+}
+
+.dashboard-card-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #1B3A2F;
+}
+
+/* Tournament list styles */
+.tournaments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+.tournament-item {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.tournament-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.tournament-item h4 {
+  color: #1B3A2F;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.tournament-item p {
+  margin: 0.25rem 0;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.stat-item {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.stat-item h4 {
+  color: #1B3A2F;
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.stat-value {
+  color: #F4A261;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Leaderboard */
+.leaderboard {
+  text-align: left;
+}
+
+.leaderboard-header {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.5rem;
+  background-color: #1B3A2F;
+  color: white;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.leaderboard-item {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-bottom: 1px solid #e9ecef;
+  align-items: center;
+}
+
+.leaderboard-item:last-child {
+  border-bottom: none;
+}
+
+.rank {
+  color: #F4A261;
+  font-weight: bold;
+}
+
+.player-name {
+  color: #1B3A2F;
+  font-weight: 500;
+}
+
+.points {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.tournaments {
+  color: #495057;
+}
+
+/* Profile Summary */
+.profile-summary {
+  text-align: left;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  border: 3px solid #F4A261;
+}
+
+.profile-header h3 {
+  color: #1B3A2F;
+  margin: 0;
+}
+
+.profile-details {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.profile-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.profile-item:last-child {
+  border-bottom: none;
+}
+
+.profile-item .label {
+  color: #495057;
+  font-weight: 500;
+}
+
+.profile-item .value {
+  color: #1B3A2F;
+  font-weight: 600;
+}
+
+.error-message {
+  color: #dc3545;
+  padding: 1rem;
+  background-color: #f8d7da;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+/* Button styles */
+.dashboard-button {
+  padding: 0.5rem 1rem;
+  background-color: #F4A261;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
