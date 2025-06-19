@@ -11,7 +11,7 @@ console.log('🔍 Environment check:', {
   emailUser: process.env.EMAIL_USER ? 'set' : 'not set'
 });
 
-// ✅ FIXED: Correct method name is createTransport, not createTransporter
+// Initialize nodemailer transporter
 let transporter = null;
 if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
   transporter = nodemailer.createTransport({
@@ -28,7 +28,7 @@ if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
   console.log('⚠️ Email credentials not found, email service will not work');
 }
 
-// ✅ TEST transporter configuration
+// Test SMTP connection
 const testEmailConfig = async () => {
   try {
     console.log('🔧 Testing nodemailer configuration...');
@@ -45,7 +45,7 @@ const testEmailConfig = async () => {
   }
 };
 
-// ✅ Send tournament notification email to all users
+// Send tournament notification email
 export const sendTournamentNotification = async (users, tournament) => {
   try {
     if (!transporter) {
@@ -71,7 +71,7 @@ export const sendTournamentNotification = async (users, tournament) => {
             <li>Fee: ${tournament.registrationFee}</li>
             <li>Prize: ${tournament.prizePool}</li>
           </ul>
-          <a href="${process.env.CLIENT_URL}/tournaments/${tournament._id}/register"
+          <a href="${process.env.CLIENT_URL}/events"
              style="background-color: #4CAF50; padding: 10px 20px; text-decoration: none; color: white; border-radius: 5px;">
             Register Now
           </a>
@@ -96,7 +96,7 @@ export const sendTournamentNotification = async (users, tournament) => {
   }
 };
 
-// ✅ Send fixture confirmation
+// Send fixture confirmation email
 export const sendFixtureConfirmation = async (tournament, fixtures) => {
   if (!transporter) return [];
 
@@ -128,7 +128,7 @@ export const sendFixtureConfirmation = async (tournament, fixtures) => {
   return Promise.all(emailPromises);
 };
 
-// ✅ Simple test mail function
+// Send test email
 const sendTestEmail = async (to) => {
   if (!transporter) return false;
 
