@@ -25,11 +25,13 @@ import webhookRoute from './routes/webhooks.js';
 import tournamentRoutes from './routes/tournamentRoutes.js';
 import Registration from './models/Registration.js';
 
-// Middleware
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Request logging middleware (ignores /healthz)
 app.use((req, res, next) => {
   if (req.path !== '/healthz') {
     console.log(`${req.method} ${req.path}`);
@@ -37,11 +39,9 @@ app.use((req, res, next) => {
   next();
 });
 
-
-// Request logging middleware
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
-  next();
+// ✅ Health check route (must be above 404 handler)
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
 });
 
 // Connect to MongoDB
@@ -49,7 +49,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Routes
+// API Routes
 app.use('/api/tournaments', tournamentRoute);
 app.use('/api/registration', registrationRoute);
 app.use('/api/webhooks', webhookRoute);
@@ -66,18 +66,13 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
-//health check
-app.get('/healthz', (req, res) => {
-  res.status(200).send('OK');
-});
-
-// ✅ Add this conditional to avoid trying to load .env on Render
+// ✅ Avoid loading dotenv again in production
 if (process.env.NODE_ENV !== 'production') {
   import('dotenv').then(dotenv => dotenv.config());
 }
 
-
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-}); 
+  console.log(`🚀 Server is running on port ${PORT}`);
+});
