@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import AddEventForm from "./AddEventForm";
-import "./Events.css";
+import "./events.css";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
