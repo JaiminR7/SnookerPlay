@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth, SignIn, SignUp } from "@clerk/clerk-react";
 import Navbar from "./components/Navbar";
-import Footer from "./pages/footer";
+import Footer from "./pages/Footer";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Events from "./pages/Events";
