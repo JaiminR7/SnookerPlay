@@ -9,12 +9,12 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [stats, setStats] = useState({
-    totalTournaments: 0,
-    tournamentsWon: 0,
-    winRate: 0,
-    averageRank: 0,
-    totalMatches: 0,
-    matchesWon: 0,
+    totalTournaments: Math.floor(Math.random() * 10) + 1,
+    tournamentsWon: Math.floor(Math.random() * 5),
+    winRate: Math.floor(Math.random() * 100),
+    averageRank: (Math.random() * 5 + 1).toFixed(1),
+    totalMatches: Math.floor(Math.random() * 30) + 1,
+    matchesWon: Math.floor(Math.random() * 20),
   });
 
   useEffect(() => {
