@@ -1,12 +1,15 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth, SignIn, SignUp } from "@clerk/clerk-react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar";
 import Footer from "./pages/Footer";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Events from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
+import PaymentSuccess from "./pages/PaymentSuccess";
 import Register from "./pages/register";
 
 const ProtectedRoute = ({ children }) => {
@@ -47,8 +50,8 @@ function App() {
 
             <Route path="/events" element={<Events />} />
             <Route path="/events/:eventId" element={<EventDetail />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/register" element={<Register />} />
-            
 
             {/* Clerk built-in auth routes */}
             <Route path="/sign-in" element={<SignIn />} />
@@ -56,6 +59,20 @@ function App() {
           </Routes>
         </main>
         <Footer />
+
+        {/* Toast Container */}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     </BrowserRouter>
   );

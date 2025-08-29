@@ -46,7 +46,7 @@ const testEmailConfig = async () => {
 };
 
 // Send tournament notification email
-export const sendTournamentNotification = async (users, tournament) => {
+const sendTournamentNotification = async (users, tournament) => {
   try {
     if (!transporter) {
       console.error("❌ Cannot send emails - transporter not initialized");
@@ -97,7 +97,7 @@ export const sendTournamentNotification = async (users, tournament) => {
 };
 
 // Send fixture confirmation email
-export const sendFixtureConfirmation = async (tournament, fixtures) => {
+const sendFixtureConfirmation = async (tournament, fixtures) => {
   if (!transporter) return [];
 
   const emailPromises = tournament.participants.map(async (participantId) => {
@@ -133,6 +133,124 @@ export const sendFixtureConfirmation = async (tournament, fixtures) => {
   return Promise.all(emailPromises);
 };
 
+// Send registration confirmation email
+const sendRegistrationConfirmation = async (userEmail, userName, tournament) => {
+  try {
+    if (!transporter) {
+      console.error("❌ Cannot send registration email - transporter not initialized");
+      return false;
+    }
+
+    const mailOptions = {
+      from: `"SnookerPlay" <${process.env.EMAIL_USER}>`,
+      to: userEmail,
+      subject: `✅ Registration Confirmed: ${tournament.title}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #4CAF50;">🎉 Registration Confirmed!</h2>
+          <p>Hello ${userName || "Player"},</p>
+          <p>You have successfully registered for the following tournament:</p>
+          
+          <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #333; margin-top: 0;">${tournament.title}</h3>
+            <ul style="list-style: none; padding: 0;">
+              <li><strong>📍 Location:</strong> ${tournament.location}</li>
+              <li><strong>📅 Date:</strong> ${new Date(tournament.date).toLocaleDateString()}</li>
+              <li><strong>⏰ Time:</strong> ${tournament.time}</li>
+              <li><strong>💰 Registration Fee:</strong> ${tournament.registrationFee}</li>
+              <li><strong>🏆 Prize Pool:</strong> ${tournament.prizePool}</li>
+            </ul>
+          </div>
+          
+          <p><strong>What's Next?</strong></p>
+          <ul>
+            <li>Keep an eye on your email for fixture updates</li>
+            <li>Arrive at the venue 30 minutes before your first match</li>
+            <li>Bring your own cue if preferred</li>
+          </ul>
+          
+          <p style="margin-top: 30px;">
+            <a href="${process.env.CLIENT_URL}/events/${tournament._id}" 
+               style="background-color: #4CAF50; padding: 12px 24px; text-decoration: none; color: white; border-radius: 5px; display: inline-block;">
+              View Tournament Details
+            </a>
+          </p>
+          
+          <p style="color: #666; font-size: 14px; margin-top: 30px;">
+            Good luck in the tournament!<br>
+            - Team SnookerPlay
+          </p>
+        </div>
+      `,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`✅ Registration confirmation sent to ${userEmail}:`, info.response);
+    return true;
+  } catch (error) {
+    console.error(`❌ Failed to send registration confirmation to ${userEmail}:`, error.message);
+    return false;
+  }
+};
+
+// Send registration cancellation email
+const sendRegistrationCancellation = async (userEmail, userName, tournament) => {
+  try {
+    if (!transporter) {
+      console.error("❌ Cannot send cancellation email - transporter not initialized");
+      return false;
+    }
+
+    const mailOptions = {
+      from: `"SnookerPlay" <${process.env.EMAIL_USER}>`,
+      to: userEmail,
+      subject: `❌ Registration Cancelled: ${tournament.title}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #f44336;">🔄 Registration Cancelled</h2>
+          <p>Hello ${userName || "Player"},</p>
+          <p>Your registration for the following tournament has been cancelled:</p>
+          
+          <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ffc107;">
+            <h3 style="color: #333; margin-top: 0;">${tournament.title}</h3>
+            <ul style="list-style: none; padding: 0;">
+              <li><strong>📍 Location:</strong> ${tournament.location}</li>
+              <li><strong>📅 Date:</strong> ${new Date(tournament.date).toLocaleDateString()}</li>
+              <li><strong>⏰ Time:</strong> ${tournament.time}</li>
+            </ul>
+          </div>
+          
+          <p><strong>Important Notes:</strong></p>
+          <ul>
+            <li>Your registration has been successfully removed</li>
+            <li>If you paid a registration fee, refund processing may take 3-5 business days</li>
+            <li>You can register again anytime if spots are available</li>
+          </ul>
+          
+          <p style="margin-top: 30px;">
+            <a href="${process.env.CLIENT_URL}/events" 
+               style="background-color: #2196F3; padding: 12px 24px; text-decoration: none; color: white; border-radius: 5px; display: inline-block;">
+              Browse Other Tournaments
+            </a>
+          </p>
+          
+          <p style="color: #666; font-size: 14px; margin-top: 30px;">
+            We hope to see you in future tournaments!<br>
+            - Team SnookerPlay
+          </p>
+        </div>
+      `,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`✅ Registration cancellation sent to ${userEmail}:`, info.response);
+    return true;
+  } catch (error) {
+    console.error(`❌ Failed to send registration cancellation to ${userEmail}:`, error.message);
+    return false;
+  }
+};
+
 // Send test email
 const sendTestEmail = async (to) => {
   if (!transporter) return false;
@@ -153,4 +271,11 @@ const sendTestEmail = async (to) => {
   }
 };
 
-export { sendTestEmail, testEmailConfig };
+export { 
+  sendTestEmail, 
+  testEmailConfig, 
+  sendTournamentNotification,
+  sendFixtureConfirmation,
+  sendRegistrationConfirmation, 
+  sendRegistrationCancellation 
+};

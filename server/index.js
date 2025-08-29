@@ -23,6 +23,7 @@ import tournamentRoute from './routes/tournaments.js';
 import registrationRoute from './routes/Registration.js';
 import webhookRoute from './routes/webhooks.js';
 import tournamentRoutes from './routes/tournamentRoutes.js';
+import emailTestRoute from './routes/emailTest.js';
 import Registration from './models/Registration.js';
 
 const app = express();
@@ -54,6 +55,7 @@ app.use('/api/tournaments', tournamentRoute);
 app.use('/api/registration', registrationRoute);
 app.use('/api/webhooks', webhookRoute);
 app.use('/api/v1/tournaments', tournamentRoutes);
+app.use('/api/email-test', emailTestRoute);
 
 // 404 handler
 app.use((req, res) => {

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { X } from "lucide-react";
+import { toast } from "react-toastify";
 import axios from "axios";
 import "./events.css";
 
@@ -78,27 +80,32 @@ const AddEventForm = ({ onClose, onEventAdded }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const payload = {
         ...formData,
         date: new Date(formData.date), // Convert to Date object
       };
-  
+
       const response = await axios.post(
         "http://localhost:5000/api/tournaments",
         payload
       );
-  
-      alert("Event added successfully!");
+
+      toast.success("🎉 Event added successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+      });
       onEventAdded(response.data);
       onClose();
     } catch (error) {
-      alert("Error adding event. Please try again.");
+      toast.error("Error adding event. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+      });
       console.error("Submission error:", error?.response?.data || error);
     }
   };
-  
 
   return (
     <div className="add-event-form-overlay">
@@ -191,7 +198,7 @@ const AddEventForm = ({ onClose, onEventAdded }) => {
                     onClick={() => removeRule(index)}
                     className="remove-button"
                   >
-                    ×
+                    <X size={16} />
                   </button>
                 )}
               </div>
@@ -217,7 +224,7 @@ const AddEventForm = ({ onClose, onEventAdded }) => {
                     onClick={() => removeSchedule(index)}
                     className="remove-button"
                   >
-                    ×
+                    <X size={16} />
                   </button>
                 )}
               </div>

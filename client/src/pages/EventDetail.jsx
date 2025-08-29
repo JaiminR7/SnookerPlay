@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
-
+import {
+  IndianRupee,
+  Calendar,
+  MapPin,
+  Users,
+  Trophy,
+  Clock,
+  ArrowLeft,
+} from "lucide-react";
+import { toast } from "react-toastify";
 import axios from "axios";
+import PaymentModal from "../components/PaymentModal";
 import "./eventDetail.css";
 
 const EventDetail = () => {
@@ -11,6 +21,7 @@ const EventDetail = () => {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const { user } = useUser();
 
@@ -34,33 +45,29 @@ const EventDetail = () => {
     fetchEventDetails();
   }, [eventId]);
 
-  const handleRegister = async () => {
-  if (!user) {
-    alert("You must be logged in to register.");
-    return;
-  }
+  const handleRegister = () => {
+    if (!user) {
+      toast.error("You must be logged in to register for events", {
+        position: "top-right",
+        autoClose: 5000,
+      });
+      return;
+    }
 
-  try {
-    const response = await axios.post("http://localhost:5000/api/registration", {
-      userId: user.id,
-      tournamentId: event._id,
+    setShowPaymentModal(true);
+  };
+
+  const handlePaymentSuccess = () => {
+    toast.success("🎉 Registration successful! Welcome to the tournament!", {
+      position: "top-right",
+      autoClose: 5000,
     });
+    setShowPaymentModal(false);
+  };
 
-    if (response.status === 201) {
-      alert("Successfully registered!");
-    } else {
-      alert("Something went wrong. Please try again.");
-    }
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      alert(err.response.data.message);
-    } else {
-      alert("Registration failed.");
-    }
-    console.error("Registration error:", err);
-  }
-};
-
+  const handlePaymentClose = () => {
+    setShowPaymentModal(false);
+  };
 
   if (loading) {
     return <div className="loading">Loading...</div>;
@@ -77,7 +84,7 @@ const EventDetail = () => {
   return (
     <div className="event-detail-container">
       <button className="back-button" onClick={() => navigate("/events")}>
-        ← Back to Events
+        <ArrowLeft size={16} /> Back to Events
       </button>
 
       <div className="event-header">
@@ -92,13 +99,21 @@ const EventDetail = () => {
           <h1 className="event-detail-title">{event.title}</h1>
           <div className="event-meta">
             <p className="event-date">
-              📅 Date: {new Date(event.date).toLocaleDateString()}
+              <Calendar size={16} /> Date:{" "}
+              {new Date(event.date).toLocaleDateString()}
             </p>
-            <p className="event-time">⏰ Time: {event.time}</p>
-            <p className="event-location">📍 Location: {event.location}</p>
-            <p className="event-price-pool">💰 Prize Pool: {event.prizePool}</p>
+            <p className="event-time">
+              <Clock size={16} /> Time: {event.time}
+            </p>
+            <p className="event-location">
+              <MapPin size={16} /> Location: {event.location}
+            </p>
+            <p className="event-price-pool">
+              <Trophy size={16} /> Prize Pool: {event.prizePool}
+            </p>
             <p className="event-registration-fee">
-              💵 Registration Fee: {event.registrationFee}
+              <IndianRupee size={16} /> Registration Fee:{" "}
+              {event.registrationFee}
             </p>
           </div>
           <button className="register-button" onClick={handleRegister}>
@@ -129,6 +144,15 @@ const EventDetail = () => {
           </ul>
         </section>
       </div>
+
+      {/* Payment Modal */}
+      {showPaymentModal && (
+        <PaymentModal
+          event={event}
+          onClose={handlePaymentClose}
+          onSuccess={handlePaymentSuccess}
+        />
+      )}
     </div>
   );
 };

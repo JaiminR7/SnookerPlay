@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
+import { Trophy, Plus, Target } from "lucide-react";
 import axios from "axios";
 import AddEventForm from "./AddEventForm";
+import EventCard from "../components/EventCard";
 import "./events.css";
 
 const Events = () => {
@@ -47,16 +49,27 @@ const Events = () => {
 
   return (
     <div className="events-container">
-      <h1>Upcoming Tournaments</h1>
+      <div className="events-header">
+        <div className="header-content">
+          <h1 className="events-title">
+            <Trophy className="title-icon" size={32} />
+            Upcoming Tournaments
+          </h1>
+          <p className="events-subtitle">
+            Discover and participate in exciting snooker tournaments
+          </p>
+        </div>
 
-      {user && (
-        <button
-          className="add-event-button"
-          onClick={() => setShowAddForm(true)}
-        >
-          + Add New Tournament
-        </button>
-      )}
+        {user && (
+          <button
+            className="add-event-button enhanced-add-btn"
+            onClick={() => setShowAddForm(true)}
+          >
+            <Plus className="btn-icon" size={20} />
+            Add New Tournament
+          </button>
+        )}
+      </div>
 
       {showAddForm && (
         <AddEventForm
@@ -66,22 +79,15 @@ const Events = () => {
       )}
 
       {events.length === 0 ? (
-        <p>No tournaments available at the moment.</p>
+        <div className="no-events-message">
+          <Target className="no-events-icon" size={48} />
+          <h3>No tournaments available at the moment</h3>
+          <p>Check back soon for exciting upcoming tournaments!</p>
+        </div>
       ) : (
-        <div className="events-grid">
+        <div className="events-grid enhanced-grid">
           {events.map((event) => (
-            <div
-              key={event._id}
-              className="event-card"
-              onClick={() => handleClick(event._id)}
-            >
-              <img src="/images/slide1.png" alt={event.title} />
-              <h2>{event.title}</h2>
-              <p>{event.date?.slice(0, 10)}</p>
-              <p>{event.location}</p>
-              <p>Prize Pool: {event.prizePool}</p>
-              <p>Fee: {event.registrationFee}</p>
-            </div>
+            <EventCard key={event._id} event={event} onClick={handleClick} />
           ))}
         </div>
       )}

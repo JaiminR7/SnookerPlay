@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  CheckCircle,
+  Trophy,
+  Users,
+  Target,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import {
   SignedIn,
   SignedOut,
   SignInButton,
@@ -61,11 +69,11 @@ const Home = () => {
         ))}
 
         <button onClick={goToPrevSlide} className="carousel-arrow left">
-          &#10094;
+          <ChevronLeft size={24} />
         </button>
 
         <button onClick={goToNextSlide} className="carousel-arrow right">
-          &#10095;
+          <ChevronRight size={24} />
         </button>
 
         <div className="carousel-dots">
@@ -92,7 +100,7 @@ const Home = () => {
         <div className="feature-grid">
           <div className="feature-card">
             <div className="feature-icon">
-              <span>✓</span>
+              <CheckCircle size={24} />
             </div>
             <h3 className="feature-title">What is SnookerPlay?</h3>
             <p className="feature-text">
@@ -104,7 +112,7 @@ const Home = () => {
 
           <div className="feature-card">
             <div className="feature-icon">
-              <span>✓</span>
+              <CheckCircle size={24} />
             </div>
             <h3 className="feature-title">What can I do with SnookerPlay?</h3>
             <p className="feature-text">
@@ -116,7 +124,7 @@ const Home = () => {
 
           <div className="feature-card">
             <div className="feature-icon">
-              <span>✓</span>
+              <CheckCircle size={24} />
             </div>
             <h3 className="feature-title">Who is it for?</h3>
             <p className="feature-text">
