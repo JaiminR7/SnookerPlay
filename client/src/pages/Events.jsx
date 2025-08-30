@@ -87,7 +87,12 @@ const Events = () => {
       ) : (
         <div className="events-grid enhanced-grid">
           {events.map((event, index) => (
-            <EventCard key={event._id} event={event} onClick={handleClick} index={index} />
+            <EventCard
+              key={event._id}
+              event={event}
+              onClick={handleClick}
+              index={index}
+            />
           ))}
         </div>
       )}

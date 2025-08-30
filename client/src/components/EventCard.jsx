@@ -11,17 +11,17 @@ const EventCard = ({ event, onClick, index }) => {
     "/images/events/img4.png",
     "/images/events/img5.jpg",
     "/images/events/img6.jpg",
-    "/images/events/img7.jpg"
+    "/images/events/img7.jpg",
   ];
 
   // Select image based on index or event ID hash
   const getEventImage = () => {
-    if (typeof index === 'number') {
+    if (typeof index === "number") {
       return eventImages[index % eventImages.length];
     }
     // Fallback: use event ID to create a consistent hash
-    const hash = event._id.split('').reduce((a, b) => {
-      a = ((a << 5) - a) + b.charCodeAt(0);
+    const hash = event._id.split("").reduce((a, b) => {
+      a = (a << 5) - a + b.charCodeAt(0);
       return a & a;
     }, 0);
     return eventImages[Math.abs(hash) % eventImages.length];
