@@ -53,7 +53,7 @@ const PaymentModal = ({ event, onClose, onSuccess }) => {
             "🎉 Registration successful! Welcome to the tournament!",
             {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
             }
           );
           onSuccess();
@@ -79,7 +79,7 @@ const PaymentModal = ({ event, onClose, onSuccess }) => {
             "🎉 Registration successful! Welcome to the tournament!",
             {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
             }
           );
           onSuccess();
@@ -93,7 +93,7 @@ const PaymentModal = ({ event, onClose, onSuccess }) => {
         "Registration failed. Please try again.";
       toast.error(errorMessage, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
       });
       setError(errorMessage);
     } finally {
