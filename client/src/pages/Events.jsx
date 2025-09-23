@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import { Trophy, Plus, Target } from "lucide-react";
-import axios from "axios";
+import API from "../services/api";
 import AddEventForm from "./AddEventForm";
 import EventCard from "../components/EventCard";
 import "./events.css";
@@ -22,7 +22,7 @@ const Events = () => {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:5000/api/tournaments");
+      const response = await API.get("/tournaments");
       setEvents(response.data);
       setError(null);
     } catch (err) {

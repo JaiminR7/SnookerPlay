@@ -14,7 +14,7 @@ import {
   IndianRupee,
   XCircle,
 } from "lucide-react";
-import axios from "axios";
+import API from "../services/api";
 import "./dashboard.css";
 
 const Dashboard = () => {
@@ -50,9 +50,7 @@ const Dashboard = () => {
 
       try {
         setLoading(true);
-        const response = await axios.get(
-          `http://localhost:5000/api/registration/user/${user.id}`
-        );
+        const response = await API.get(`/registration/user/${user.id}`);
 
         // If no tournaments found, add some mock data for demonstration
         let tournaments = response.data;
@@ -114,8 +112,8 @@ const Dashboard = () => {
     }
 
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/registration/${user.id}/${tournamentId}`
+      const response = await API.delete(
+        `/registration/${user.id}/${tournamentId}`
       );
 
       if (response.data.success) {

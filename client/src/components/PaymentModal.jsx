@@ -12,7 +12,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { toast } from "react-toastify";
-import axios from "axios";
+import API from "../services/api";
 import "./PaymentModal.css";
 
 const PaymentModal = ({ event, onClose, onSuccess }) => {
@@ -35,18 +35,15 @@ const PaymentModal = ({ event, onClose, onSuccess }) => {
 
       if (registrationFee === 0) {
         // Handle free event registration
-        const response = await axios.post(
-          "http://localhost:5000/api/registration",
-          {
-            userId: user.id,
-            tournamentId: event._id,
-            userDetails: {
-              name: user.fullName || `${user.firstName} ${user.lastName}`,
-              email: user.emailAddresses[0]?.emailAddress,
-              phone: user.phoneNumbers[0]?.phoneNumber || "Not provided",
-            },
-          }
-        );
+        const response = await API.post("/registration", {
+          userId: user.id,
+          tournamentId: event._id,
+          userDetails: {
+            name: user.fullName || `${user.firstName} ${user.lastName}`,
+            email: user.emailAddresses[0]?.emailAddress,
+            phone: user.phoneNumbers[0]?.phoneNumber || "Not provided",
+          },
+        });
 
         if (response.data.success || response.status === 201) {
           toast.success(
@@ -61,18 +58,15 @@ const PaymentModal = ({ event, onClose, onSuccess }) => {
         }
       } else {
         // Direct registration for paid events (no payment integration)
-        const response = await axios.post(
-          "http://localhost:5000/api/registration",
-          {
-            userId: user.id,
-            tournamentId: event._id,
-            userDetails: {
-              name: user.fullName || `${user.firstName} ${user.lastName}`,
-              email: user.emailAddresses[0]?.emailAddress,
-              phone: user.phoneNumbers[0]?.phoneNumber || "Not provided",
-            },
-          }
-        );
+        const response = await API.post("/registration", {
+          userId: user.id,
+          tournamentId: event._id,
+          userDetails: {
+            name: user.fullName || `${user.firstName} ${user.lastName}`,
+            email: user.emailAddresses[0]?.emailAddress,
+            phone: user.phoneNumbers[0]?.phoneNumber || "Not provided",
+          },
+        });
 
         if (response.data.success || response.status === 201) {
           toast.success(

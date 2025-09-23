@@ -10,7 +10,7 @@ import {
   User,
 } from "lucide-react";
 import { toast } from "react-toastify";
-import axios from "axios";
+import API from "../services/api";
 import "./PaymentSuccess.css";
 
 const PaymentSuccess = () => {
@@ -30,9 +30,7 @@ const PaymentSuccess = () => {
 
   const fetchEventDetails = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/tournaments/${eventId}`
-      );
+      const response = await API.get(`/tournaments/${eventId}`);
       setEventDetails(response.data);
     } catch (error) {
       console.error("Error fetching event details:", error);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 import { toast } from "react-toastify";
-import axios from "axios";
+import API from "../services/api";
 import "./events.css";
 
 const AddEventForm = ({ onClose, onEventAdded }) => {
@@ -87,10 +87,7 @@ const AddEventForm = ({ onClose, onEventAdded }) => {
         date: new Date(formData.date), // Convert to Date object
       };
 
-      const response = await axios.post(
-        "http://localhost:5000/api/tournaments",
-        payload
-      );
+      const response = await API.post("/tournaments", payload);
 
       toast.success("🎉 Event added successfully!", {
         position: "top-right",

@@ -11,7 +11,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { toast } from "react-toastify";
-import axios from "axios";
+import API from "../services/api";
 import PaymentModal from "../components/PaymentModal";
 import "./eventDetail.css";
 
@@ -29,9 +29,7 @@ const EventDetail = () => {
     const fetchEventDetails = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          `http://localhost:5000/api/tournaments/${eventId}`
-        );
+        const response = await API.get(`/tournaments/${eventId}`);
         setEvent(response.data);
         setError(null);
       } catch (err) {
