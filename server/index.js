@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 
-// Load environment variables first, before any other imports
+// Load environment variables
 const result = dotenv.config();
 
 if (result.error) {
@@ -9,7 +9,7 @@ if (result.error) {
   console.log('✅ .env file loaded successfully');
 }
 
-// Debug environment variables immediately after loading
+// Debug environment variables on startup
 console.log('🔍 Environment variables check:', {
   hasMongoUri: !!process.env.MONGO_URI,
   hasClientUrl: !!process.env.CLIENT_URL,
@@ -24,12 +24,15 @@ import registrationRoute from './routes/Registration.js';
 import webhookRoute from './routes/webhooks.js';
 import tournamentRoutes from './routes/tournamentRoutes.js';
 import emailTestRoute from './routes/emailTest.js';
-import Registration from './models/Registration.js';
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// ✅ Use dynamic CORS (no hardcoding Netlify)
+app.use(cors({
+  origin: process.env.CLIENT_URL, 
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Request logging middleware (ignores /healthz)
@@ -40,15 +43,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ Health check route (must be above 404 handler)
+// Health check route for Vercel monitoring
 app.get('/healthz', (req, res) => {
   res.status(200).send('OK');
 });
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // API Routes
 app.use('/api/tournaments', tournamentRoute);
@@ -68,18 +71,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
-// ✅ Avoid loading dotenv again in production
-if (process.env.NODE_ENV !== 'production') {
-  import('dotenv').then(dotenv => dotenv.config());
-}
-
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
 });
-
-app.use(cors({
-  origin: 'https://snookerplay.netlify.app', // Your Netlify domain
-  credentials: true
-}));
