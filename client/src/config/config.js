@@ -3,6 +3,9 @@ export const config = {
   apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
   clientUrl: import.meta.env.VITE_CLIENT_URL || 'http://localhost:5173',
   
+  // Clerk configuration
+  clerkPublishableKey: import.meta.env.VITE_CLERK_PUBLISHABLE_KEY,
+  
   // Stripe configuration
   stripePublishableKey: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
   
@@ -15,6 +18,7 @@ export const config = {
 console.log('🔧 Config loaded:', {
   apiUrl: config.apiUrl,
   clientUrl: config.clientUrl,
+  hasClerkKey: !!config.clerkPublishableKey,
   env_VITE_API_URL: import.meta.env.VITE_API_URL,
   env_VITE_CLIENT_URL: import.meta.env.VITE_CLIENT_URL
 });
