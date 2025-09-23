@@ -11,4 +11,12 @@ export const config = {
   version: '1.0.0'
 };
 
+// Debug logging
+console.log('🔧 Config loaded:', {
+  apiUrl: config.apiUrl,
+  clientUrl: config.clientUrl,
+  env_VITE_API_URL: import.meta.env.VITE_API_URL,
+  env_VITE_CLIENT_URL: import.meta.env.VITE_CLIENT_URL
+});
+
 export default config;
