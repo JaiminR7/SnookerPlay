@@ -24,6 +24,8 @@ import registrationRoute from './routes/Registration.js';
 import webhookRoute from './routes/webhooks.js';
 import tournamentRoutes from './routes/tournamentRoutes.js';
 import emailTestRoute from './routes/emailTest.js';
+import paymentRoutes from './routes/payments.js';
+import stripeWebhookRoutes from './routes/stripeWebhook.js';
 
 const app = express();
 
@@ -48,6 +50,9 @@ app.use(cors({
   },
   credentials: true
 }));
+
+// Stripe webhook (must be before express.json() middleware)
+app.use('/api/webhooks/stripe', stripeWebhookRoutes);
 
 app.use(express.json());
 
@@ -75,6 +80,7 @@ app.use('/api/registration', registrationRoute);
 app.use('/api/webhooks', webhookRoute);
 app.use('/api/v1/tournaments', tournamentRoutes);
 app.use('/api/email-test', emailTestRoute);
+app.use('/api/payments', paymentRoutes);
 
 // 404 handler
 app.use((req, res) => {

@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { toast } from "react-toastify";
 import API from "../services/api";
-import PaymentModal from "../components/PaymentModal";
+import StripePaymentModal from "../components/StripePaymentModal";
 import "./eventDetail.css";
 
 const EventDetail = () => {
@@ -145,7 +145,7 @@ const EventDetail = () => {
 
       {/* Payment Modal */}
       {showPaymentModal && (
-        <PaymentModal
+        <StripePaymentModal
           event={event}
           onClose={handlePaymentClose}
           onSuccess={handlePaymentSuccess}

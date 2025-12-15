@@ -23,8 +23,11 @@
   max-width: 500px;
   width: 90%;
   max-height: 90vh;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   animation: slideUp 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes fadeIn {
@@ -52,9 +55,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 1.5rem 0;
+  padding: 1.5rem 1.5rem 1rem;
   border-bottom: 1px solid #f1f5f9;
-  margin-bottom: 1.5rem;
+  flex-shrink: 0;
+  background: white;
+  border-radius: 16px 16px 0 0;
 }
 
 .payment-title {
@@ -92,6 +97,8 @@
 /* Content */
 .payment-content {
   padding: 0 1.5rem 1.5rem;
+  flex: 1;
+  overflow-y: auto;
 }
 
 /* Event Summary */
@@ -263,6 +270,58 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Stripe Card Element Styles */
+.stripe-card-container {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.card-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.75rem;
+}
+
+.card-label svg {
+  color: #10b981;
+}
+
+.stripe-card-element {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.2s ease;
+  min-height: 50px;
+  position: relative;
+  cursor: text;
+}
+
+.stripe-card-element .StripeElement {
+  width: 100%;
+  padding: 0;
+}
+
+.stripe-card-element:focus-within {
+  border-color: #1B3A2F;
+  box-shadow: 0 0 0 3px rgba(27, 58, 47, 0.1);
+}
+
+.stripe-card-element.StripeElement--invalid {
+  border-color: #dc2626;
+}
+
+.stripe-card-element.StripeElement--focus {
+  border-color: #1B3A2F;
+  box-shadow: 0 0 0 3px rgba(27, 58, 47, 0.1);
 }
 
 /* Security Note */

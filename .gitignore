@@ -64,3 +64,6 @@ Thumbs.db
 # Build outputs
 dist/
 build/ 
+
+# Documentation and reports
+Internship_docs/
